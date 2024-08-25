@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    // this is JPQL, similar to SQL but it uses the entity name and field names instead of table names and column names
+    // this is JPQL, similar to SQL, but it uses the entity name and field names instead of table names and column names
     @Query("SELECT p FROM Product p WHERE "+
             "LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR "+
             "LOWER(p.brand) LIKE LOWER(CONCAT('%', :keyword, '%')) OR "+

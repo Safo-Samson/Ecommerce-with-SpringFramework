@@ -56,5 +56,30 @@ public class ProductController {
                 .body(imageFile);
     }
 
+    @PutMapping("/product/{id}")
+    public ResponseEntity<String> updateProduct(@PathVariable int id,@RequestPart Product product, @RequestPart MultipartFile imageFile){
+        try{
+            Product prod = productService.updateProduct(id, product, imageFile);
+            if(prod!=null){
+                return new ResponseEntity<>("Product updated successfully", HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Failed to update", HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable int id){
+        Product product = productService.getProduct(id);
+        if(product == null){
+            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+        }
+        productService.deleteProduct(id);
+        return new ResponseEntity<>("Product deleted successfully", HttpStatus.OK);
+    }
+
+
 
 }
